@@ -1,15 +1,23 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowUpRight, ArrowDownRight, CreditCard, Wallet, TrendingUp } from "lucide-react";
+import {
+  ArrowUpRight,
+  ArrowDownRight,
+  CreditCard,
+  Wallet,
+  TrendingUp,
+} from "lucide-react";
+import PaymentForm from "@/components/PaymentForm";
+import PaymentStatus from "@/components/PaymentStatus";
 
 export default function DashboardPage() {
   const [userName] = useState("Clinton");
 
   return (
-    <main className="min-h-screen bg-gray-50 pt-24 pb-10 px-6">
-      {/* Welcome Header */}
-      <section className="max-w-7xl mx-auto mb-10">
+    <main className="min-h-screen bg-gray-50 flex flex-col items-center justify-start pt-24 pb-0">
+      {/* Header Section */}
+      <section className="w-full max-w-7xl px-6 mb-10">
         <h1 className="text-3xl font-bold text-gray-900">
           Welcome back, <span className="text-indigo-600">{userName}</span> 👋
         </h1>
@@ -18,8 +26,8 @@ export default function DashboardPage() {
         </p>
       </section>
 
-      {/* Stats Grid */}
-      <section className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+      {/* Stats Section */}
+      <section className="w-full max-w-7xl grid grid-cols-1 md:grid-cols-3 gap-8 px-6">
         <div className="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition border border-gray-100">
           <div className="flex items-center justify-between mb-3">
             <h3 className="text-gray-600 font-medium">Total Balance</h3>
@@ -54,8 +62,21 @@ export default function DashboardPage() {
         </div>
       </section>
 
-      {/* Recent Transactions Table */}
-      <section className="max-w-7xl mx-auto mt-14 bg-white rounded-2xl shadow border border-gray-100 overflow-hidden">
+      {/* Payment Form + Status */}
+      <section className="w-full max-w-4xl mt-14 px-6">
+        <div className="bg-white rounded-2xl shadow border border-gray-100 p-8">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+            Make a Payment
+          </h2>
+          <PaymentForm />
+          <div className="mt-8">
+            <PaymentStatus status="pending" />
+          </div>
+        </div>
+      </section>
+
+      {/* Transactions Table */}
+      <section className="w-full max-w-7xl mt-14 bg-white rounded-2xl shadow border border-gray-100 overflow-hidden">
         <div className="flex justify-between items-center px-6 py-4 border-b border-gray-200">
           <h2 className="text-xl font-semibold text-gray-800">Recent Transactions</h2>
           <button className="text-indigo-600 font-medium hover:underline">
@@ -110,7 +131,7 @@ export default function DashboardPage() {
       </section>
 
       {/* Insights Section */}
-      <section className="max-w-7xl mx-auto mt-14">
+      <section className="w-full max-w-7xl mt-14 mb-0">
         <div className="bg-indigo-600 text-white rounded-2xl p-10 flex flex-col md:flex-row items-center justify-between">
           <div>
             <h2 className="text-2xl font-bold mb-2">Performance Insights</h2>
