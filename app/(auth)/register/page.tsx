@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Eye, EyeOff, Google } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
+import { SiGoogle } from "react-icons/si";
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
@@ -70,7 +71,7 @@ export default function RegisterPage() {
             className="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-lg border hover:shadow-md transition mb-4"
             aria-label="Sign up with Google"
           >
-            <Google size={18} />
+            <SiGoogle size={18} />
             <span className="text-sm font-medium">Sign up with Google</span>
           </button>
 

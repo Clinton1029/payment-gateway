@@ -11,15 +11,15 @@ export default function Navbar() {
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
   return (
-    <nav className="fixed top-0 left-0 w-full bg-white/80 backdrop-blur-md shadow-sm z-50 border-b border-gray-100">
+    <nav className="fixed top-0 left-0 w-full bg-white/70 backdrop-blur-md shadow-sm z-50 border-b border-gray-100 transition-all duration-300">
       <div className="flex items-center justify-between px-6 md:px-12 py-4 max-w-7xl mx-auto">
         {/* Logo */}
-        <div className="flex items-center gap-2">
-          <Wallet2 className="text-indigo-600 w-7 h-7" />
-          <h1 className="text-2xl font-extrabold text-indigo-600 tracking-tight">
+        <Link href="/" className="flex items-center gap-2 group">
+          <Wallet2 className="text-indigo-600 w-7 h-7 group-hover:rotate-12 transition-transform" />
+          <h1 className="text-2xl font-extrabold text-indigo-600 tracking-tight group-hover:text-indigo-700 transition-colors">
             PayFlex
           </h1>
-        </div>
+        </Link>
 
         {/* Desktop Menu */}
         <ul className="hidden md:flex items-center gap-8 text-gray-700 font-medium">
@@ -46,7 +46,7 @@ export default function Navbar() {
           </li>
           <li>
             <Link
-              href="/(auth)/login"
+              href="/login"
               className="hover:text-indigo-600 flex items-center gap-1 transition-colors"
             >
               <LogIn size={18} /> Login
@@ -54,8 +54,8 @@ export default function Navbar() {
           </li>
           <li>
             <Link
-              href="/(auth)/register"
-              className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 flex items-center gap-1 transition-colors"
+              href="/register"
+              className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 flex items-center gap-1 shadow-sm hover:shadow-md transition-all"
             >
               <UserPlus size={18} /> Sign Up
             </Link>
@@ -111,7 +111,7 @@ export default function Navbar() {
               </li>
               <li>
                 <Link
-                  href="/(auth)/login"
+                  href="/login"
                   onClick={() => setMenuOpen(false)}
                   className="flex items-center gap-2 hover:text-indigo-600 transition-colors"
                 >
@@ -120,9 +120,9 @@ export default function Navbar() {
               </li>
               <li>
                 <Link
-                  href="/(auth)/register"
+                  href="/register"
                   onClick={() => setMenuOpen(false)}
-                  className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 flex items-center gap-2 transition-colors"
+                  className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 flex items-center gap-2 shadow-sm hover:shadow-md transition-all"
                 >
                   <UserPlus size={18} /> Sign Up
                 </Link>
