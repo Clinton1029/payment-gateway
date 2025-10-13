@@ -2,9 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Eye, EyeOff} from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import { SiGoogle } from "react-icons/si";
-
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -34,7 +33,6 @@ export default function LoginPage() {
       if (!res.ok) {
         setError(data?.message || "Login failed");
       } else {
-        // Example: store token and redirect - adjust to your auth flow
         if (data.token) localStorage.setItem("token", data.token);
         window.location.href = "/dashboard";
       }
@@ -46,8 +44,8 @@ export default function LoginPage() {
     }
   };
 
-  const startGoogleOAuth = () => {
-    // Backend should handle the OAuth redirect flow at /api/auth/google
+  const handleGoogle = () => {
+    // Backend handles OAuth redirect flow at /api/auth/google
     window.location.href = "/api/auth/google";
   };
 
@@ -64,7 +62,7 @@ export default function LoginPage() {
 
           {/* Google OAuth */}
           <button
-            onClick={startGoogleOAuth}
+            onClick={handleGoogle}
             className="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-lg border hover:shadow-md transition mb-4"
             aria-label="Sign in with Google"
           >
@@ -78,14 +76,14 @@ export default function LoginPage() {
             <span className="flex-1 h-px bg-gray-200" />
           </div>
 
-          {/* Error */}
+          {/* Error Message */}
           {error && (
             <div className="text-sm text-red-600 bg-red-50 border border-red-100 rounded-md p-2 mb-3">
               {error}
             </div>
           )}
 
-          {/* Form */}
+          {/* Login Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
             <label className="block">
               <span className="text-sm text-gray-600">Email</span>
@@ -138,9 +136,10 @@ export default function LoginPage() {
             </button>
           </form>
 
+          {/* ✅ Fixed Link Path */}
           <div className="text-center mt-5 text-sm text-gray-500">
             Don’t have an account?{" "}
-            <Link href="/(auth)/register" className="text-indigo-600 hover:underline">
+            <Link href="/register" className="text-indigo-600 hover:underline">
               Create account
             </Link>
           </div>
