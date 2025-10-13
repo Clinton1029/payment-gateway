@@ -14,7 +14,7 @@ export default function RegisterPage() {
   const [error, setError] = useState<string | null>(null);
 
   const handleGoogle = () => {
-    // Start OAuth flow - backend should redirect to provider
+    // Start OAuth flow - backend should redirect to Google provider
     window.location.href = "/api/auth/google";
   };
 
@@ -44,8 +44,6 @@ export default function RegisterPage() {
       if (!res.ok) {
         setError(data?.message || "Registration failed");
       } else {
-        // Optionally log the user in automatically (depends on backend response)
-        // e.g. if backend returns token: localStorage.setItem("token", data.token)
         window.location.href = "/dashboard";
       }
     } catch (err) {
@@ -60,12 +58,14 @@ export default function RegisterPage() {
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md">
         <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8">
-          <h1 className="text-2xl font-extrabold text-gray-900 mb-1 text-center">Create an account</h1>
+          <h1 className="text-2xl font-extrabold text-gray-900 mb-1 text-center">
+            Create an account
+          </h1>
           <p className="text-sm text-gray-500 mb-6 text-center">
             Join PayFlex and start accepting payments today
           </p>
 
-          {/* Google */}
+          {/* Google Button */}
           <button
             onClick={handleGoogle}
             className="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-lg border hover:shadow-md transition mb-4"
@@ -141,9 +141,10 @@ export default function RegisterPage() {
             </button>
           </form>
 
+          {/* ✅ Fixed Link Path */}
           <div className="text-center mt-5 text-sm text-gray-500">
             Already have an account?{" "}
-            <Link href="/(auth)/login" className="text-indigo-600 hover:underline">
+            <Link href="/login" className="text-indigo-600 hover:underline">
               Sign in
             </Link>
           </div>
