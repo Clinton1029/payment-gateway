@@ -1,9 +1,10 @@
 import "./globals.css";
-//import Navbar from "../components/Navbar";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 export const metadata = {
-  title: "PayFlex - Modern Payment Gateway",
-  description: "A modern and secure payment gateway built with Next.js and TypeScript",
+  title: "PayFlex Gateway",
+  description: "Modern payment gateway built with Next.js + TypeScript",
 };
 
 export default function RootLayout({
@@ -14,8 +15,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-gray-50 text-gray-900">
-       {/* <Navbar /> */}
-        <main className="pt-16">{children}</main>
+        <Navbar />
+        <main className="min-h-screen pt-20">{children}</main>
+        <Footer />
       </body>
     </html>
   );
