@@ -1,4 +1,3 @@
-// app/(auth)/register/page.tsx
 "use client";
 import { useState } from "react";
 import Link from "next/link";
@@ -6,6 +5,47 @@ import { Eye, EyeOff } from "lucide-react";
 
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setMessage("");
+
+    try {
+      const res = await fetch("http://localhost:5000/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setMessage("✅ Registration successful! You can now log in.");
+        setFormData({ name: "", email: "", password: "" });
+      } else {
+        setMessage(`❌ ${data.message || "Registration failed."}`);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setMessage("❌ Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <section className="flex flex-col items-center justify-center min-h-screen px-4 bg-gradient-to-br from-blue-50 to-indigo-100">
@@ -13,21 +53,36 @@ export default function RegisterPage() {
         <h1 className="text-3xl font-bold text-center text-indigo-600">
           Create Account
         </h1>
-        <form className="space-y-4">
+
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <input
             type="text"
+            name="name"
             placeholder="Full Name"
+            value={formData.name}
+            onChange={handleChange}
+            required
             className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-indigo-400 outline-none"
           />
+
           <input
             type="email"
+            name="email"
             placeholder="Email"
+            value={formData.email}
+            onChange={handleChange}
+            required
             className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-indigo-400 outline-none"
           />
+
           <div className="relative">
             <input
               type={showPassword ? "text" : "password"}
+              name="password"
               placeholder="Password"
+              value={formData.password}
+              onChange={handleChange}
+              required
               className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-indigo-400 outline-none"
             />
             <button
@@ -38,14 +93,22 @@ export default function RegisterPage() {
               {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
             </button>
           </div>
+
           <button
             type="submit"
-            className="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-all duration-300"
+            disabled={loading}
+            className="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-all duration-300 disabled:bg-indigo-300"
           >
-            Sign Up
+            {loading ? "Creating account..." : "Sign Up"}
           </button>
         </form>
+
+        {message && (
+          <p className="text-center text-sm mt-2 text-gray-700">{message}</p>
+        )}
+
         <div className="text-center text-gray-600">OR</div>
+
         <button
           type="button"
           className="flex items-center justify-center gap-3 w-full border border-gray-300 py-3 rounded-lg hover:bg-gray-100 transition"
@@ -57,6 +120,7 @@ export default function RegisterPage() {
           />
           Sign up with Google
         </button>
+
         <p className="text-center text-gray-700">
           Already have an account?{" "}
           <Link href="/login" className="text-indigo-600 font-semibold">
