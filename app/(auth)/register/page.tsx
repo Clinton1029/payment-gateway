@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
+import { signIn } from "next-auth/react"; // 👈 Import from NextAuth
 
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -23,7 +24,7 @@ export default function RegisterPage() {
     setMessage("");
 
     try {
-      const res = await fetch("http://localhost:3000/api/auth/register", {
+      const res = await fetch("/api/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -45,6 +46,12 @@ export default function RegisterPage() {
     } finally {
       setLoading(false);
     }
+  };
+
+  // 👇 Google OAuth handler
+  const handleGoogleSignIn = () => {
+    signIn("google", { callbackUrl: "/dashboard" }); 
+    // after login, redirect to /dashboard or any page you want
   };
 
   return (
@@ -109,8 +116,10 @@ export default function RegisterPage() {
 
         <div className="text-center text-gray-600">OR</div>
 
+        {/* 👇 Google Login Button */}
         <button
           type="button"
+          onClick={handleGoogleSignIn} // 👈 Added this
           className="flex items-center justify-center gap-3 w-full border border-gray-300 py-3 rounded-lg hover:bg-gray-100 transition"
         >
           <img
