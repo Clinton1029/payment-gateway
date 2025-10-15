@@ -1,10 +1,12 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation"; // 👈 Import router
 import { Eye, EyeOff } from "lucide-react";
-import { signIn } from "next-auth/react"; // 👈 Import from NextAuth
+import { signIn } from "next-auth/react";
 
 export default function RegisterPage() {
+  const router = useRouter(); // 👈 initialize router
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -35,7 +37,8 @@ export default function RegisterPage() {
       const data = await res.json();
 
       if (res.ok) {
-        setMessage("✅ Registration successful! You can now log in.");
+        setMessage("✅ Registration successful! Redirecting to login...");
+        setTimeout(() => router.push("/login"), 1500); // 👈 Redirect after 1.5s
         setFormData({ name: "", email: "", password: "" });
       } else {
         setMessage(`❌ ${data.message || "Registration failed."}`);
@@ -48,10 +51,8 @@ export default function RegisterPage() {
     }
   };
 
-  // 👇 Google OAuth handler
   const handleGoogleSignIn = () => {
-    signIn("google", { callbackUrl: "/dashboard" }); 
-    // after login, redirect to /dashboard or any page you want
+    signIn("google", { callbackUrl: "/dashboard" });
   };
 
   return (
@@ -116,10 +117,9 @@ export default function RegisterPage() {
 
         <div className="text-center text-gray-600">OR</div>
 
-        {/* 👇 Google Login Button */}
         <button
           type="button"
-          onClick={handleGoogleSignIn} // 👈 Added this
+          onClick={handleGoogleSignIn}
           className="flex items-center justify-center gap-3 w-full border border-gray-300 py-3 rounded-lg hover:bg-gray-100 transition"
         >
           <img
